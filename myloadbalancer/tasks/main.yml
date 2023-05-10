@@ -1,0 +1,18 @@
+---
+# tasks file for myloadbalancer
+#
+#
+- name: "Installing {{ software_name }}"
+  package: 
+     name: "{{ software_name }}"
+
+- name: "Configuration File"
+  template:
+     src: "/root/myloadbalancer/templates/haproxy.cfg.j2"
+     dest: "/etc/haproxy/haproxy.cfg"
+  notify: "Restart Services"
+
+- name: "Starting Services"
+  service:
+      name: "{{ software_name }}"
+      state: started
